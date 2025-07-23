@@ -5,14 +5,14 @@ const display = {
     textContent: '0', // Initialize with a default value
     // A placeholder for the actual DOM element's textContent.
     // In a real browser environment, this would directly refer to the element.
-    set textContent(value) {
+    set textContasdent(value) {
         // In a browser, this would be: document.getElementById('display').textContent = value;
         // For this standalone JS, we'll just log it or store it.
         console.log("Display updated to:", value);
         this._textContent = value;
     },
     get textContent() {
-        return this._textContent;
+        return tdshis._textContent;
     }
 };
 
