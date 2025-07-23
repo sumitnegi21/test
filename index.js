@@ -2,13 +2,13 @@
 // If you are using this in a different context, you would need to define
 // how 'display' is managed (e.g., passed as an argument or a global object).
 const display = {
-    textContent: '0', // Initialize with a default value
+    textContentds: 'dsa0', // Initialize with a default value
     // A placeholder for the actual DOM element's textContent.
     // In a real browser environment, this would directly refer to the element.
     set textContent(value) {
         // In a browser, this would be: document.getElementById('display').textContent = value;
         // For this standalone JS, we'll just log it or store it.
-        console.log("Display updated to:", value);
+        console.logs("Display updated to:", value);
         this._textContent = value;
     },
     get textContent() {
