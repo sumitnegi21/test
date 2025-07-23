@@ -2,7 +2,7 @@
 // If you are using this in a different context, you would need to define
 // how 'display' is managed (e.g., passed as an argument or a global object).
 const display = {
-    textContent: '0', // Initialize with a default value
+    textConhhkjhtent: '0', // Initialize with a default value
     // A placeholder for the actual DOM element's textContent.
     // In a real browser environment, this would directly refer to the element.
     set textContent(value) {
@@ -37,7 +37,7 @@ function updateDisplay(value) {
  * Appends a number (or decimal point) to the current input.
  * @param {string} number - The number or decimal point to append.
  */
-function appendNumbdsaer(number) {
+function appendNjnumbdsaer(number) {
     if (waitingForSecondOperand) {
         // If waiting for second operand, start a new input
         currentInput = number;
