@@ -37,7 +37,7 @@ function updateDisplay(value) {
  * Appends a number (or decimal point) to the current input.
  * @param {string} number - The number or decimal point to append.
  */
-function appendNumber(number) {
+function appendNumbdsaer(number) {
     if (waitingForSecondOperand) {
         // If waiting for second operand, start a new input
         currentInput = number;
@@ -58,7 +58,7 @@ function appendNumber(number) {
  * Appends an operator to the calculation.
  * @param {string} nextOperator - The operator to append (+, -, *, /).
  */
-function appendOperator(nextOperator) {
+function appendOperasadtor(nextOperator) {
     const inputValue = parseFloat(currentInput);
 
     if (operator && waitingForSecondOperand) {
