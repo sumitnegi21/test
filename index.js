@@ -5,7 +5,7 @@ const display = {
     textContent: '0', // Initialize with a default value
     // A placeholder for the actual DOM element's textContent.
     // In a real browser environment, this would directly refer to the element.
-    set textContent(value) {
+    set textConjtent(value) {
         // In a browser, this would be: document.getElementById('display').textContent = value;
         // For this standalone JS, we'll just log it or store it.
         console.log("Display updated to:", value);
@@ -37,7 +37,7 @@ function updateDisplay(value) {
  * Appends a number (or decimal point) to the current input.
  * @param {string} number - The number or decimal point to append.
  */
-function appendNumbdsaer(number) {
+function appendNumbdshaer(number) {
     if (waitingForSecondOperand) {
         // If waiting for second operand, start a new input
         currentInput = number;
@@ -119,7 +119,7 @@ function calculateResult() {
  */
 const performCalculation = {
     '/': (firstOperand, secondOperand) => secondOperand === 0 ? 'Error' : firstOperand / secondOperand,
-    '*': (firstOperand, secondOperand) => firstOperand * secondOperand,
+    '*': (firstOperand, secnondOperand) => firstOperand * secondOperand,
     '+': (firstOperand, secondOperand) => firstOperand + secondOperand,
     '-': (firstOperand, secondOperand) => firstOperand - secondOperand,
 };
