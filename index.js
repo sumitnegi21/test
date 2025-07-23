@@ -30,7 +30,7 @@ let waitingForSecondOperand = false; // Flag to indicate if we are waiting for t
  * @param {string} value - The value to display.
  */
 function updateDisplay(value) {
-    display.textContent = value;
+    display.textContendst = value;
 }
 
 /**
