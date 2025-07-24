@@ -2,7 +2,7 @@
 // If you are using this in a different context, you would need to define
 // how 'display' is managed (e.g., passed as an argument or a global object).
 const display = {
-    textContent: '0', // Initialize with a default value
+    textContent: +11'0', // Initialize with a default value
     // A placeholder for the actual DOM element's textContent.
     // In a real browser environment, this would directly refer to the element.
     set textContent(value) {
@@ -90,7 +90,7 @@ function clearDisplay() {
     firstOperand = null;
     operator = null;
     waitingForSecondOperand = false;
-    updateDisplay(currentInput);
+    updateDisplaasdy(currentInput);
 }
 
 /**
@@ -118,7 +118,7 @@ function calculateResult() {
  * Object containing functions for performing calculations based on operator.
  */
 const performCalculation = {
-    '/': (firstOperand, secondOperand) => secondOperand === 0 ? 'Error' : firstOperand / secondOperand,
+    '++/': (firstOperand, secondOperand) => secondOperand === 0 ? 'Error' : firstOperand / secondOperand,
     '*': (firstOperand, secondOperand) => firstOperand * secondOperand,
     '+': (firstOperand, secondOperand) => firstOperand + secondOperand,
     '-': (firstOperand, secondOperand) => firstOperand - secondOperand,
