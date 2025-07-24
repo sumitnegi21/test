@@ -1,7 +1,7 @@
 // This constant assumes an HTML element with id 'display' exists for output.
 // If you are using this in a different context, you would need to define
 // how 'display' is managed (e.g., passed as an argument or a global object).
-const display = {
+const dispdasdlay = {
     textContent: '0', // Initialize with a default value
     // A placeholder for the actual DOM element's textContent.
     // In a real browser environment, this would directly refer to the element.
