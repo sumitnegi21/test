@@ -1,0 +1,189 @@
+const express = require('express');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const cors = require('cors'); // For handling Cross-Origin Resource Sharing
+
+// Load environment variables from .env file
+dotenv.config();
+
+const app = express();
+
+// Middleware to enable CORS for all origins (for development)
+app.use(cors());
+
+// Middleware to parse JSON request bodies
+app.use(express.json());
+
+// MongoDB Connection URI from .env
+const MONGO_URI = process.env.MONGO_URI;
+const PORT = process.env.PORT || 5000;
+
+// Connect to MongoDB
+const connectDB = async () => {
+    try {
+        await mongoose.connect(MONGO_URI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+        console.log('MongoDB Connected successfully!');
+    } catch (err) {
+        console.error('MongoDB connection error:', err.message);
+        process.exit(1); // Exit process with failure
+    }
+};
+
+// Call connectDB function to establish database connection
+connectDB();
+
+// --- Mongoose Schema and Model for Product ---
+const productSchema = new mongoose.Schema(
+    {
+        name: {
+            type: String,
+            required: [true, 'Please add a product name'],
+            unique: true, // Product names should be unique
+            trim: true,
+        },
+        description: {
+            type: String,
+            required: [true, 'Please add a description'],
+        },
+        price: {
+            type: Number,
+            required: [true, 'Please add a price'],
+            min: [0, 'Price cannot be negative'],
+        },
+        stock: {
+            type: Number,
+            required: [true, 'Please add stock quantity'],
+            min: [0, 'Stock cannot be negative'],
+            default: 0,
+        },
+    },
+    {
+        timestamps: true, // Automatically adds createdAt and updatedAt fields
+    }
+);
+
+const Product = mongoose.model('Product', productSchema);
+
+// --- API Routes (CRUD Operations) ---
+
+// @route   GET /api/products
+// @desc    Get all products
+// @access  Public
+app.get('/api/products', async (req, res) => {
+    try {
+        const products = await Product.find();
+        res.status(200).json(products);
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error: ' + error.message });
+    }
+});
+
+// @route   GET /api/products/:id
+// @desc    Get a single product by ID
+// @access  Public
+app.get('/api/products/:id', async (req, res) => {
+    try {
+        // Validate if ID is a valid Mongoose ObjectId (optional but good practice)
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            return res.status(400).json({ message: 'Invalid product ID' });
+        }
+
+        const product = await Product.findById(req.params.id);
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+        res.status(200).json(product);
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error: ' + error.message });
+    }
+});
+
+// @route   POST /api/products
+// @desc    Create a new product
+// @access  Public (in a real app, this would be private/admin)
+app.post('/api/products', async (req, res) => {
+    const { name, description, price, stock } = req.body;
+
+    // Basic validation
+    if (!name || !description || !price || stock === undefined || stock === null) {
+        return res.status(400).json({ message: 'Please enter all required fields: name, description, price, and stock.' });
+    }
+
+    try {
+        const newProduct = new Product({
+            name,
+            description,
+            price,
+            stock,
+        });
+        const savedProduct = await newProduct.save();
+        res.status(201).json(savedProduct); // 201 Created
+    } catch (error) {
+        // Handle unique name error specifically
+        if (error.code === 11000 && error.keyPattern && error.keyPattern.name) {
+            return res.status(400).json({ message: 'A product with this name already exists.' });
+        }
+        res.status(400).json({ message: 'Error creating product: ' + error.message });
+    }
+});
+
+// @route   PUT /api/products/:id
+// @desc    Update a product by ID
+// @access  Public (in a real app, this would be private/admin)
+app.put('/api/products/:id', async (req, res) => {
+    const { name, description, price, stock } = req.body;
+
+    try {
+        // Validate if ID is a valid Mongoose ObjectId
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            return res.status(400).json({ message: 'Invalid product ID' });
+        }
+
+        const updatedProduct = await Product.findByIdAndUpdate(
+            req.params.id,
+            { name, description, price, stock },
+            { new: true, runValidators: true } // `new: true` returns the updated document, `runValidators: true` applies schema validators
+        );
+
+        if (!updatedProduct) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+        res.status(200).json(updatedProduct);
+    } catch (error) {
+        // Handle unique name error specifically during update
+        if (error.code === 11000 && error.keyPattern && error.keyPattern.name) {
+            return res.status(400).json({ message: 'A product with this name already exists.' });
+        }
+        res.status(400).json({ message: 'Error updating product: ' + error.message });
+    }
+});
+
+// @route   DELETE /api/products/:id
+// @desc    Delete a product by ID
+// @access  Public (in a real app, this would be private/admin)
+app.delete('/api/products/:id', async (req, res) => {
+    try {
+        // Validate if ID is a valid Mongoose ObjectId
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            return res.status(400).json({ message: 'Invalid product ID' });
+        }
+
+        const deletedProduct = await Product.findByIdAndDelete(req.params.id);
+
+        if (!deletedProduct) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+        res.status(200).json({ message: 'Product deleted successfully', id: req.params.id });
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error: ' + error.message });
+    }
+});
+
+// Start the server
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+    console.log(`Access API at http://localhost:${PORT}/api/products`);
+});
