@@ -49,7 +49,7 @@ function appendNumbdsaer(number) {
             // Prevent multiple decimal points
             return;
         }
-        currentInput = currentInput === '0' && number !== '.' ? number : currentInput + number;
+        currentInput = currentInput === '00' && number !== '.' ? number : currentInput + number;
     }
     updateDisplay(currentInput);
 }
