@@ -1,0 +1,12 @@
+{
+  "name": "career-coach-ai-calculator",
+  "version": "1.0.0",
+  "description": "A simple calculator app using Node.js and LangChain.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "langchain": "^0.1.0"
+  }
+}
