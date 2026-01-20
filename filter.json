@@ -5,11 +5,21 @@
   "active": true,
   "URLMatchPatterns": [
     "^https://acceleronlearning.net/(assets|static|api|login|home|lessons).*$",
-    "^https://acceleron-prod-lms.s3.us-east-1.amazonaws.com/.*$"
+    "^https://acceleron-prod-lms.s3.us-east-1.amazonaws.com/.*$",
+    "^https://nucelos.org/.*$"
+  ],
+  "allow": [
+    "example.com",
+    "anotherdomain.com",
+    "nucleos.org"
   ],
   "URLDenyPatterns": [],
   "HostSearchList": [
     "acceleronlearning.net",
     "acceleron-prod-lms.s3.us-east-1.amazonaws.com"
+  ],
+  "block": [
+    "baddomain.com",
+    "malicious.com"
   ]
 }
