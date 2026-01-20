@@ -1,15 +1,15 @@
 {
-  "name": "Acceleron Learning",
-  "type": "Acceleron Learning",
-  "version": "1.0.0",
-  "active": true,
   "URLMatchPatterns": [
-    "^https://acceleronlearning.net/(assets|static|api|login|home|lessons).*$",
-    "^https://acceleron-prod-lms.s3.us-east-1.amazonaws.com/.*$"
+    "*://*.example.com/*",
+    "*://*.anotherexample.com/*",
+    "*://*.nucleos.org/*"
   ],
-  "URLDenyPatterns": [],
   "HostSearchList": [
     "acceleronlearning.net",
     "acceleron-prod-lms.s3.us-east-1.amazonaws.com"
-  ]
+  ],
+  "SomeOtherConfig": {
+    "key1": "value1",
+    "key2": "value2"
+  }
 }
