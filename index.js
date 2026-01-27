@@ -8,7 +8,7 @@
   "linkAddress": "https://acceleronlearning.net/login",
   "isGluu": true,
   "isLTI": false,
-  "tags": ["Academic"],
+  "tags": ["Academic","dasdsad],
   "visible": false,
   "granular": true,
   "metadata": {
